@@ -41,8 +41,8 @@ public class FFT{
                     k=p*N/Math.pow(2,m+1);
                     wk.pow(w, tmpC2, k);
                     tmpC.mlt(f[(int)(p+Math.pow(2,m)+n)],wk);
-                    a = Complex.add(f[p+n],tmpC);
-                    b = Complex.mns(f[p + n], tmpC);
+                    a.add(f[p+n],tmpC);
+                    b.mns(f[p+n],tmpC);
                     f[p+n].setComplex(a);
                     f[(int)(p+Math.pow(2,m)+n)].setComplex(b);
                 }
