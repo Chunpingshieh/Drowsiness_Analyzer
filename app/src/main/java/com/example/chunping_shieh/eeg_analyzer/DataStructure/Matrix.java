@@ -3,6 +3,7 @@ package com.example.chunping_shieh.eeg_analyzer.DataStructure;
 
 /**
  * Created by ChunPing-Shieh on 2015/1/8.
+ * Matrix contains the data structure of a Matrix and the methods
  */
 public class Matrix {
     private double[][] matrix;
@@ -13,12 +14,12 @@ public class Matrix {
         col = Col;
         raw = Raw;
         matrix = new double[raw][col];
-        int i,j;
+        /*int i,j;
         for (j=1; j<=col; j++){
             for (i=1; i<=raw; i++){
                 matrix[raw-1][col-1] = 0;
             }
-        }
+        }*/
     }
 
     //Getters==========================================
@@ -40,8 +41,7 @@ public class Matrix {
         return matrix[Raw][Col];
     }
 
-
-
+    /** getColVector return the No. colNumber column of the Matrix in a form of a single column Matrix (Vector) */
     public Matrix getColVector(int colNumber){
         Matrix colVector=new Matrix(this.getRaw(),1);
         int i;
@@ -51,6 +51,7 @@ public class Matrix {
         return colVector;
     }
 
+    /** getRawDouble return the No. rawNumber raw of the Matrix in a form of 1*col double array */
     public double[] getRawDouble(int rawNumber){
         double[] rawVector=new double[this.getCol()];
         int i;
@@ -62,6 +63,7 @@ public class Matrix {
 
     //Setters===========================================
 
+    /** setMatrixCell set the single cell located in (Raw, Col) to num */
     public void setMatrixCell(double num, int Raw, int Col) {
         matrix[Raw][Col] = num;
     }
@@ -74,7 +76,8 @@ public class Matrix {
 
 
 
-    public Matrix MatrixCross(Matrix A, Matrix B){
+    /** MatrixCross return the Cross Product of Matrix A and B*/
+    public static Matrix MatrixCross(Matrix A, Matrix B){
         int i,j,k;
         double tmp=0;
         Matrix ans=new Matrix(A.getRaw(),B.getCol());
@@ -90,6 +93,7 @@ public class Matrix {
         return ans;
     }
 
+    /** MatrixCrossN put the Cross Product of Matrix A nad B into this */
     public void MatrixCrossN(Matrix A, Matrix B){
         int i,j,k;
         double tmp=0;
@@ -104,8 +108,7 @@ public class Matrix {
         }
     }
 
-
-
+    /** VectorScale resize the Vector length to 1*/
     public void VectorScale(){
         int i;
         double distance;
@@ -115,6 +118,7 @@ public class Matrix {
         }
     }
 
+    /** MartixPlus add Matrix A and B and set the answer to this*/
     public void MatrixPlus(Matrix A, Matrix B){
         int i,j;
         for (i=0;i<A.getRaw();i++){
@@ -124,6 +128,7 @@ public class Matrix {
         }
     }
 
+    /** MartixPlus subtract Matrix A and B and set the answer to this*/
     public void MatrixMinus(Matrix A, Matrix B){
         int i,j;
         for (i=0;i<A.getRaw();i++){
@@ -133,6 +138,7 @@ public class Matrix {
         }
     }
 
+    /** Transpose returns the Transpose of the Matrix*/
     public Matrix Transpose(){
         int i,j;
         Matrix ans=new Matrix(this.getCol(),this.getRaw());
@@ -144,13 +150,14 @@ public class Matrix {
         return ans;
     }
 
+    /** VectorDistance returns the Vector's length*/
     public double VectorDistance(){
         Matrix ans;
         ans=MatrixCross(this.Transpose(),this);
         return Math.sqrt(ans.getMatrixCell(0,0));
     }
 
-
+    /** getScatterMatrix returns the Scatter Matrix of the Matrix X */
     public static Matrix getScatterMatrix(Matrix X) {
         Matrix ans = new Matrix(X.getRaw(),X.getRaw());
         Matrix meanVector = new Matrix(X.getRaw(),1);

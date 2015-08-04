@@ -30,9 +30,6 @@ public class lineGraph {
 
     }
 
-
-
-
     public GraphicalView getmChartView() {
         return mChartView;
     }
