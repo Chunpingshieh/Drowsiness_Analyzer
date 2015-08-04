@@ -16,15 +16,12 @@ public class Complex {
     }
 
 
-
-    public void add(Complex a, Complex b){
-        this.real=a.real+b.real;
-        this.imagine=a.imagine+b.imagine;
+    public static Complex add(Complex a, Complex b){
+        return new Complex(a.real+b.real, a.imagine+b.imagine);
     }
 
-    public void mns(Complex a, Complex b){
-        this.real=a.real-b.real;
-        this.imagine=a.imagine-b.imagine;
+    public static Complex mns(Complex a, Complex b){
+        return new Complex(a.real-b.real, a.imagine-b.imagine);
     }
 
     public void mlt(Complex a, Complex b){//a and b can not be this.

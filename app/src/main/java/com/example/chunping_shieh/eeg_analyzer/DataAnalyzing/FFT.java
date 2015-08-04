@@ -39,10 +39,10 @@ public class FFT{
             for (int n=0; n<N; n+=Math.pow(2,m+1)){
                 for (int p=0; p<Math.pow(2,m);p++){
                     k=p*N/Math.pow(2,m+1);
-                    wk.pow(w,tmpC2,k);
+                    wk.pow(w, tmpC2, k);
                     tmpC.mlt(f[(int)(p+Math.pow(2,m)+n)],wk);
-                    a.add(f[p+n],tmpC);
-                    b.mns(f[p+n],tmpC);
+                    a = Complex.add(f[p+n],tmpC);
+                    b = Complex.mns(f[p + n], tmpC);
                     f[p+n].setComplex(a);
                     f[(int)(p+Math.pow(2,m)+n)].setComplex(b);
                 }
