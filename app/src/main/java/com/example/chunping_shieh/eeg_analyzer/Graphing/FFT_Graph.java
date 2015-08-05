@@ -11,10 +11,12 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 /**
  * Created by ChunPing-Shieh on 2015/7/20.
+ * FFT_Graph defines the details of the line graph that shows FFT result of the raw Data
+ * This Class is powered by aChartEngine
  */
 public class FFT_Graph extends lineGraph {
-    public FFT_Graph(int Channel, int SampleRate) {
-        super(Channel, SampleRate);
+    public FFT_Graph() {
+        super();
         width = 100;
         mRenderer.setAntialiasing(false);
         // Add single dataset to multiple dataset
@@ -31,10 +33,8 @@ public class FFT_Graph extends lineGraph {
             renderer.setFillPoints(true);
             mRenderer.addSeriesRenderer(renderer);
         }
-        mRenderer.setBackgroundColor(Color.BLACK);
-        mRenderer.setApplyBackgroundColor(true);
-        mRenderer.setZoomEnabled(true);
-        mRenderer.setPanEnabled(true, true);
+        mRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
+        mRenderer.setShowLegend(false);
         mRenderer.setYAxisMax(100);
         mRenderer.setYAxisMin(0);
         mRenderer.setXAxisMax(width);

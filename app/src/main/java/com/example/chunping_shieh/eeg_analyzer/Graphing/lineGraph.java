@@ -2,8 +2,11 @@ package com.example.chunping_shieh.eeg_analyzer.Graphing;
 
 /**
  * Created by ChunPing-Shieh on 2015/4/30.
+ * lineGraph Defines the basic methods and items that both RawEEG_Graph and FFT_Graph use
  */
 
+
+import com.example.chunping_shieh.eeg_analyzer.Constants.InitialConstants;
 
 import org.achartengine.GraphicalView;
 import org.achartengine.model.XYMultipleSeriesDataset;
@@ -24,9 +27,9 @@ public class lineGraph {
     protected int width;
 
 
-    public lineGraph(int Channel, int SampleRate)
+    public lineGraph()
     {
-        channel=Channel;
+        channel= InitialConstants.Channel;
 
     }
 

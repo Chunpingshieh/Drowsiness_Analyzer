@@ -76,7 +76,6 @@ public class BRICommandSet {
         return command;
     }
 
-
     public static byte[] parseStopCommand() {
         byte [] command = new byte [5];
         command[0] = (byte)0xFE;

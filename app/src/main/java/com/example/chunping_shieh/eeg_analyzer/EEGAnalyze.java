@@ -77,8 +77,8 @@ public class EEGAnalyze extends ActionBarActivity {
     //endregion
 
     //region Graph stuff
-    protected static RawEEG_Graph rawEEG_graph = new RawEEG_Graph(InitialConstants.Channel, InitialConstants.SampleRate);
-    protected static FFT_Graph fft_graph = new FFT_Graph(InitialConstants.Channel, InitialConstants.SampleRate);
+    protected static RawEEG_Graph rawEEG_graph = new RawEEG_Graph();
+    protected static FFT_Graph fft_graph = new FFT_Graph();
     private static int plotTimes = 0;
     //endregion
 

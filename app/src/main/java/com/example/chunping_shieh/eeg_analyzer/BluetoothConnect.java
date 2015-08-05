@@ -13,6 +13,7 @@ import java.util.UUID;
 
 /**
  * Created by ChunPing-Shieh on 2015/7/8.
+ * BluetoothConnect Enables BT and Connect BT
  */
 public class BluetoothConnect {
 
@@ -24,10 +25,8 @@ public class BluetoothConnect {
     public static InputStream btInStream;
     public static OutputStream btOutStream;
 
-    //public static boolean btState;
-
-
     //BT connecting functions=======================================================================
+    /** Start to Enable BT and return err msg*/
     public static String startBT() {
         //This function try to connect the BT Device and return the status of the connection
         String connectStatus = enableBT();
@@ -36,32 +35,28 @@ public class BluetoothConnect {
         btAdapter.cancelDiscovery();
         return connectStatus;
     }
+
+    /** Enable BT and return err msg*/
     private static String enableBT() {
         //This function walk through the steps of enabling the BT and return the status of the connection
         btAdapter = BluetoothAdapter.getDefaultAdapter();
-
         if (btAdapter == null){
             return "device has no bluetooth";
         }
-
         if (!btAdapter.isEnabled()){
             return "Turn on the Bluetooth!";
         }
-
         BluetoothDevice tmpBTDevice = btAdapter.getRemoteDevice(InitialConstants.DeviceID);
-
-
-
-
         if(tmpBTDevice == null){
             return "Can't find Device";
 
         }else{
             btDevice = tmpBTDevice;
         }
-
         return "Start!";
     }
+
+    /**Connect and return if it success*/
     public static boolean connectBT(){
         //This function tries to connect the BT device and return the status by text
         try {
@@ -96,7 +91,7 @@ public class BluetoothConnect {
         return true;
     }
 
-    //Send BRI Command
+    /** Send Notch Filter commend*/
     public static void ControlNotchFilter(){
         try {
             if (InitialConstants.NotchFilterOn)btOutStream.write(BRICommandSet.NotchFilter_on());
