@@ -179,30 +179,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Calculate Progress"
-                android:id="@+id/textView4"
-                android:layout_weight="3"
-                android:textColor="#FFFFFF"/>
-
-            <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/CalculateTime"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="4">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Uncalculate Data"
                 android:id="@+id/textView6"
                 android:layout_weight="3"
@@ -254,7 +230,7 @@
             android:layout_weight="1"
             android:id="@+id/LowerLayout"
             android:layout_marginTop="10dp"
-            android:weightSum="3">
+            android:weightSum="7">
 
             <TextView
                 android:text="@string/hello_world"
@@ -265,7 +241,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:textColor="#ffffffff"
-                android:layout_weight="1"/>
+                android:layout_weight="3"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -281,7 +257,7 @@
                 android:text="FirstPC"
                 android:id="@+id/FirstPC"
                 android:textColor="#FFFF"
-                android:layout_weight="1"/>
+                android:layout_weight="3"/>
         </LinearLayout>
 
         <TextView

@@ -1,4 +1,4 @@
-package com.example.chunping_shieh.eeg_analyzer.Constants;
+package com.example.chunping_shieh.drowsiness_analyzer.Constants;
 
 /**
  * Created by ChunPing-Shieh on 2015/7/6.
@@ -12,8 +12,8 @@ public class InitialConstants {
     public static double FreshHz = 0.5;
     public static boolean NotchFilterOn = true;
     public static int[] ChannelSet = {1,2,4,8,16,32,64,128,256,512,1024,0,0,0,0,0};
-    public static int RatioDataNumber = 100;
-    public final static int plotTimeRes = 64;
+    public static int RatioDataNumber = 600;
+    public final static int plotTimeRes = 128;
     public final static String DeviceID = "00:1A:FF:09:0B:9D";
     private static int[] RatioRange = {15 , 25};
 
