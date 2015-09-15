@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\ChunPing-Shieh\AndroidStudioProjects\Drowsiness_Analyzer\app\libs\achartengine-1.1.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9932e3fb9fbe54e80873e77f72a99f79e33b3250">
+        <dex dex="C:\Users\ChunPing-Shieh\AndroidStudioProjects\Drowsiness_Analyzer\app\build\intermediates\pre-dexed\debug\achartengine-1.1.0-1a20f22cd81cc31d331f105478ecb2ec27f4cc97.jar" />
+    </item>
+    <item
+        jar="C:\Users\ChunPing-Shieh\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Users\ChunPing-Shieh\AndroidStudioProjects\Drowsiness_Analyzer\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-6662b84c3b737362f7b303789be8c4494cd8c566.jar" />
+    </item>
+    <item
+        jar="C:\Users\ChunPing-Shieh\AndroidStudioProjects\Drowsiness_Analyzer\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\ChunPing-Shieh\AndroidStudioProjects\Drowsiness_Analyzer\app\build\intermediates\pre-dexed\debug\classes-2a46ccf45b00ce247a573f80dee94b4e8f5335e9.jar" />
+    </item>
+    <item
+        jar="C:\Users\ChunPing-Shieh\AndroidStudioProjects\Drowsiness_Analyzer\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\ChunPing-Shieh\AndroidStudioProjects\Drowsiness_Analyzer\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-03fb747b20546a89fa8965c731b3d733adc0279e.jar" />
+    </item>
+    <item
+        jar="C:\Users\ChunPing-Shieh\AndroidStudioProjects\Drowsiness_Analyzer\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Users\ChunPing-Shieh\AndroidStudioProjects\Drowsiness_Analyzer\app\build\intermediates\pre-dexed\debug\classes-432904d3c2df5592f19afae092e1f1a3ce9dc9c9.jar" />
+    </item>
+
+</items>
