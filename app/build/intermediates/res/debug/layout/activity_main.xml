@@ -193,15 +193,32 @@
                 android:layout_weight="1"/>
         </LinearLayout>
 
-        <Button
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enable BT"
-            android:id="@+id/button"
-            android:layout_below="@+id/timer"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            />
+            android:longClickable="false"
+            android:id="@+id/buttonLayout"
+            android:weightSum="2">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enable BT"
+                android:id="@+id/button"
+                android:layout_below="@+id/timer"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start Test"
+                android:id="@+id/TestButton"
+                android:layout_weight="1"
+                android:onClick="StartDrowsinessTest"/>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/rawEEG_chart"

@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.chunping_shieh.drowsiness_analyzer.MainActivity"
+            android:name="com.example.chunping_shieh.drowsiness_analyzer.EEG_Status_Activity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -26,6 +26,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.chunping_shieh.drowsiness_analyzer.DrowsinessTestActivity"
+            android:label="@string/title_activity_drowsiness_test" >
         </activity>
     </application>
 
