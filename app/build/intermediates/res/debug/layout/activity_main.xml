@@ -67,7 +67,7 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:background="#333333"
-                ></View>
+                />
 
             <LinearLayout
                 android:orientation="vertical"

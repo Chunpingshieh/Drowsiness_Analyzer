@@ -21,7 +21,8 @@ import com.example.chunping_shieh.drowsiness_analyzer.DataStructure.Matrix;
 import com.example.chunping_shieh.drowsiness_analyzer.Graphing.FFT_Graph;
 import com.example.chunping_shieh.drowsiness_analyzer.Graphing.RawEEG_Graph;
 
-import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ import java.io.IOException;
  * */
 
 public class EEGAnalyze extends ActionBarActivity {
-//region Variables
+
 
     // region Handler and Thread stuff
     protected static HandlerThread mReceiveThread;
@@ -39,7 +40,8 @@ public class EEGAnalyze extends ActionBarActivity {
     protected static HandlerThread mAnimateThread;
     protected static HandlerThread plot_EEG;
     protected static HandlerThread plot_FFT;
-    private static Handler mUIHandler = new Handler();
+    public static HandlerThread mRecordThread;
+    protected static Handler mUIHandler = new Handler();
     //endregion
 
     //region Show stuff
@@ -66,10 +68,9 @@ public class EEGAnalyze extends ActionBarActivity {
     //endregion
 
     //region PCA stuff
-    //private static double firstPC;
     private static Matrix PCs;
     private static EigenV eigenVector = new EigenV();
-    //end region
+    //endregion
 
     //region moving average stuff
     private static double[] firstPC_Array = new double[InitialConstants.MovingAverageWindowWidth];
@@ -97,10 +98,12 @@ public class EEGAnalyze extends ActionBarActivity {
 
     //region Button
     protected static Button button;
+    protected static Button testButton;
     public static View.OnClickListener EnableButton;
     protected static View.OnClickListener StartButton;
     protected static View.OnClickListener StopButton;
-    //end region
+    protected static View.OnClickListener StartTestButton;
+    //endregion
 
     //region Timer
     static Chronometer timer;
@@ -118,13 +121,14 @@ public class EEGAnalyze extends ActionBarActivity {
     //endregion
 
     //region RunTime
-    protected static RunTimeTest totalTime = new RunTimeTest();
-    protected static RunTimeTest calculateTime = new RunTimeTest();
-    protected static RunTimeTest FFT_runTime = new RunTimeTest();
-    protected static RunTimeTest PowerRatio_runTime = new RunTimeTest();
-    protected static RunTimeTest Eigenvector_runTime = new RunTimeTest();
-    protected static RunTimeTest PrincipleComponents_runTime = new RunTimeTest();
-    protected static RunTimeTest MovingAverage_runtime = new RunTimeTest();
+    protected static RunTimeTest totalTime = new RunTimeTest(1000);
+    protected static RunTimeTest calculateTime = new RunTimeTest(1000);
+    protected static RunTimeTest FFT_runTime = new RunTimeTest(1000);
+    protected static RunTimeTest PowerRatio_runTime = new RunTimeTest(1000);
+    protected static RunTimeTest Eigenvector_runTime = new RunTimeTest(1000);
+    protected static RunTimeTest PrincipleComponents_runTime = new RunTimeTest(1000);
+    protected static RunTimeTest MovingAverage_runtime = new RunTimeTest(1000);
+   // protected static RunTimeTest Exicute_runtime = new RunTimeTest(0);
 
     //endregion
 
@@ -132,14 +136,25 @@ public class EEGAnalyze extends ActionBarActivity {
     protected static LinearLayout spinnerFram;
     //endregion
 
+    //region File stuff
+    protected static FileOutputStream outputStream;
+    protected static File file;
+    public static void EndFileWrite(){
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    //region Files
-    protected static FileOutputStream fileOutputStream;
+    }
+
     //endregion
 
-//endregion
 
-//endregion
+
+
+
+
 
 // Runnables
 
@@ -201,7 +216,7 @@ public class EEGAnalyze extends ActionBarActivity {
                     if (connectStatus.equals("Start!")) {
                         status.setText("BT Enabled!");
                         button.setText("Start");
-                        button.setOnClickListener(MainActivity.StartButton);
+                        button.setOnClickListener(EEG_Status_Activity.StartButton);
                     } else {
                         status.setText(connectStatus);
                         button.setText("Retry");
@@ -223,7 +238,7 @@ public class EEGAnalyze extends ActionBarActivity {
                     public void run() {
                         rawEEG_graph.clearChart();
                         button.setText("Stop");
-                        button.setOnClickListener(MainActivity.StopButton);
+                        button.setOnClickListener(EEG_Status_Activity.StopButton);
                     }
                 });
                 Handler mThreadHandler = new Handler(mReceiveThread.getLooper());
@@ -272,6 +287,10 @@ public class EEGAnalyze extends ActionBarActivity {
                     timer.start();
                 }
             });
+
+
+            testButton.setAlpha(1);
+            testButton.setClickable(true);
 
 
             try {
@@ -341,7 +360,7 @@ public class EEGAnalyze extends ActionBarActivity {
                     public void run() {
                         status.setText("BT Disconnected");
                         button.setText("Retry");
-                        button.setOnClickListener(MainActivity.StartButton);
+                        button.setOnClickListener(EEG_Status_Activity.StartButton);
                         BRICommandSet.releaseAllResources();
                         timer.stop();
                     }
@@ -356,6 +375,8 @@ public class EEGAnalyze extends ActionBarActivity {
                     spinnerFram.setAlpha(1);
                 }
             });
+
+            //ends file reading
 
         }
 
@@ -540,12 +561,6 @@ public class EEGAnalyze extends ActionBarActivity {
             showPCA_process.setText("Final Result :"+String.format("%.3f",finalResult)+"    ratioCnt :  " + ratioCnt);
             PCA_process_bar.setProgress(ratioCnt * 100 / InitialConstants.RatioDataNumber);
 
-//            try {
-//                fileOutputStream.write(String.format("%d\t%.3f\n",System.currentTimeMillis(),finalResult).getBytes());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
         }
     }
 
@@ -587,6 +602,27 @@ public class EEGAnalyze extends ActionBarActivity {
         }
     }
 
+    /**record the finalresult*/
+    protected static class record implements Runnable {
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    outputStream.write(String.format("%d\t%.9f\r\n", System.currentTimeMillis(), finalResult).getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    EndFileWrite();
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 
 }

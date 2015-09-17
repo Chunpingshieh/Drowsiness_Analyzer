@@ -1,7 +1,10 @@
 package com.example.chunping_shieh.drowsiness_analyzer;
 
-import android.content.Context;
+import android.content.Intent;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.SystemClock;
@@ -26,21 +29,22 @@ import com.example.chunping_shieh.drowsiness_analyzer.Constants.InitialConstants
 
 import org.achartengine.ChartFactory;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.FileOutputStream;
 
 /**
  * Created by ChunPing-Shieh on 2015/7/28.
  * This Class Contains Services Listeners to the Buttons and Switches on the Screen
  */
-public class MainActivity extends EEGAnalyze {
+public class EEG_Status_Activity extends EEGAnalyze {
 
-    //region Services
+    //Services=============================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         SetUpText();
@@ -48,9 +52,9 @@ public class MainActivity extends EEGAnalyze {
         SetUpTimer();
         SetUpSwitch();
         SetUpSpinner();
-        SetUpProgressbarar();
+        SetUpProgressbar();
         SetUpThreads();
-        //SetUpFileStorage();
+        SetUpFileStorage();
     }
 
     @Override
@@ -99,12 +103,14 @@ public class MainActivity extends EEGAnalyze {
 
     @Override
     public void onStop(){
-        BRICommandSet.releaseAllResources();
+
+
         super.onStop();
     }
 
     @Override
     public void onDestroy(){
+        BRICommandSet.releaseAllResources();
         super.onDestroy();
         mReceiveThread.quit();
         mCalculateThread.quit();
@@ -131,6 +137,9 @@ public class MainActivity extends EEGAnalyze {
     private void SetUpButton(){
         button = (Button)findViewById(R.id.button);
         button.setOnClickListener(EnableButton);
+        testButton = (Button)findViewById(R.id.TestButton);
+        testButton.setClickable(false);
+        testButton.setAlpha(0.3f);
     }
     private void SetUpTimer(){
         timer = (Chronometer)findViewById(R.id.timer);
@@ -150,7 +159,7 @@ public class MainActivity extends EEGAnalyze {
 
         spinnerFram = (LinearLayout)findViewById(R.id.SpinnersFrame);
     }
-    private void SetUpProgressbarar(){
+    private void SetUpProgressbar(){
         availableBT_bar = (ProgressBar)findViewById(R.id.AvailableBT);
         //progressTime_bar = (ProgressBar)findViewById(R.id.CalculateTime);
         uncalculated_bar = (ProgressBar)findViewById(R.id.UncalculateData);
@@ -171,37 +180,23 @@ public class MainActivity extends EEGAnalyze {
         plot_EEG = new HandlerThread("plotEEG");
         plot_EEG.setPriority(Thread.MAX_PRIORITY);
         plot_EEG.start();
+        mRecordThread = new HandlerThread("record");
+        mRecordThread.start();
 
     }
     private void SetUpFileStorage(){
-        try {
-            fileOutputStream = openFileOutput("Drowsiness_Level.txt", Context.MODE_PRIVATE);
-            String test = "test";
-            fileOutputStream.write(test.getBytes());
-            fileOutputStream.close();
-            
-            
-            FileInputStream fileInputStream = openFileInput("Drowsiness_Level.txt");
-            byte[] bufByte = new byte[10];
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            file = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),"Drowsiness.txt");
 
-            while (true){
-                int c = fileInputStream.read(bufByte);
-                if (c == -1)break;
-                else showPowerRatio.append(new String(bufByte),0,c);
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
-    //endregion
+
 
 
     //Listener=========================================================
 
-    static/**Button Listener*/ {
+    /**Button Listener*/ {
 
         EnableButton = new View.OnClickListener() {
             @Override
@@ -243,9 +238,24 @@ public class MainActivity extends EEGAnalyze {
                 mReceiveThread.quit();
                 button.setClickable(true);
                 status.setText("Stopped");
+                testButton.setAlpha(.3f);
+                testButton.setClickable(false);
+
+                SCAN();
             }
         };
 
+    }
+
+    public void StartDrowsinessTest(View view){
+        try {
+            outputStream = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        new Handler(mRecordThread.getLooper()).post(new record());
+        Intent intent_test = new Intent(this,DrowsinessTestActivity.class);
+        startActivity(intent_test);
     }
 
     private static Spinner.OnItemSelectedListener spnSampleRate = new Spinner.OnItemSelectedListener(){
@@ -274,6 +284,16 @@ public class MainActivity extends EEGAnalyze {
             InitialConstants.NotchFilterOn = isChecked;
         }
     };
+
+    public void SCAN(){
+        MediaScannerConnection.scanFile(this, new String[]{file.toString()}, null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.i("ExternalStorage", "Scanned " + path + ":");
+                        Log.i("ExternalStorage", "-> uri=" + uri);
+                    }
+                });
+    }
 
 
 

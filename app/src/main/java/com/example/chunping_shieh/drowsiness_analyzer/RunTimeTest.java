@@ -2,17 +2,27 @@ package com.example.chunping_shieh.drowsiness_analyzer;
 
 /**
  * Created by ChunPing-Shieh on 2015/9/10.
+ * This class serve as a timer
  */
 public class RunTimeTest {
-    int window = 1000;
-    long startTime;
-    long[] runTime = new long[window];
+    int window;
+    long startTime = 0;
+    long[] runTime;
     int counter = 0;
 
+    public RunTimeTest(int Window) {
+        window = Window;
+        runTime = new long[window];
+    }
+
+
+
+    /**runtime start*/
     public void tic(){
         startTime = System.currentTimeMillis();
     }
 
+    /**runtime ends*/
     public void toc(){
         if(counter >= window){
             counter = 0;
@@ -20,6 +30,11 @@ public class RunTimeTest {
         runTime[counter] = System.currentTimeMillis() - startTime;
         counter++;
     }
+
+    public long tocTime(){
+        return System.currentTimeMillis() - startTime;
+    }
+
 
     public long averageRunTime(){
         long avgRuntime = 0;
